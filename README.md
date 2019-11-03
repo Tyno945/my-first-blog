@@ -224,4 +224,7 @@ $ git push -u origin master
 $ pip3.7 install --user pythonanywhere
 $ pa_autoconfigure_django.py --python=3.7 https://github.com/Tyno945/my-first-blog.git
 $ python manage.py createsuperuser
+# Pull your new code down to PythonAnywhere, and reload your web app
+$ cd ~/<your-pythonanywhere-domain>.pythonanywhere.com
+$ git pull
 ```
