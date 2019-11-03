@@ -1,3 +1,5 @@
+# Django Girls Tutorial
+
 ## Your first Django project!
 
 ### 创建项目
@@ -292,3 +294,11 @@ $ python manage.py shell
 # close the shell
 >>> exit()
 ```
+
+## CSS – make it pretty!
+
+Cascading Style Sheets (CSS) is a language used for describing the look and formatting of a website written in a markup language (like HTML). Treat it as make-up for our web page.
+
+创建CSS文件`blog/static/css/blog.css`
+
+详细代码见`blog/templates/blog/post_list.html`和`blog/static/css/blog.css`
