@@ -177,6 +177,41 @@ A template is a file that we can re-use to present different information in a co
 </html>
 ```
 
+### Dynamic data in templates
+
+This is exactly what views are supposed to do: connect models and templates.
+
+```py
+# blog/views.py
+from django.shortcuts import render
+from django.utils import timezone
+from .models import Post
+
+def post_list(request):
+    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+    return render(request, 'blog/post_list.html', {'posts': posts})
+```
+
+### Django template tags
+
+Django template tags allow us to transfer Python-like things into HTML, so you can build dynamic websites faster. 
+
+```html
+<!-- blog/templates/blog/post_list.html -->
+<!-- body -->
+<div>
+    <h1><a href="/">Django Girls Blog</a></h1>
+</div>
+
+{% for post in posts %}
+    <div>
+        <p>published: {{ post.published_date }}</p>
+        <h2><a href="">{{ post.title }}</a></h2>
+        <p>{{ post.text|linebreaksbr }}</p>
+    </div>
+{% endfor %}
+```
+
 ## Deploy
 
 ### Git
@@ -227,4 +262,33 @@ $ python manage.py createsuperuser
 # Pull your new code down to PythonAnywhere, and reload your web app
 $ cd ~/<your-pythonanywhere-domain>.pythonanywhere.com
 $ git pull
+```
+
+## Django ORM and QuerySets
+
+```bash
+# Django shell
+$ python manage.py shell
+# All objects
+>>> from blog.models import Post
+>>> Post.objects.all()
+# Create object
+>>> from django.contrib.auth.models import User
+>>> User.objects.all()
+>>> me = User.objects.get(username='felix')
+>>> Post.objects.create(author=me, title='Sample title', text='Test')
+# Filter objects
+>>> Post.objects.filter(author=me)
+>>> Post.objects.filter(title__contains='title')
+>>> from django.utils import timezone
+>>> Post.objects.filter(published_date__lte=timezone.now())
+>>> post = Post.objects.get(title="Sample title")
+>>> post.publish()
+# Ordering objects
+>>> Post.objects.order_by('created_date')
+>>> Post.objects.order_by('-created_date')
+# Complex queries through method-chaining
+>>> Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+# close the shell
+>>> exit()
 ```
