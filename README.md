@@ -348,3 +348,10 @@ Cascading Style Sheets (CSS) is a language used for describing the look and form
     {% endfor %}
 {% endblock %}
 ```
+
+## Create post's detail
+
+- Create a template link to a post's detail
+- Create a URL to a post's detail
+- Add a post's detail view
+- Create a template for the post details
