@@ -112,6 +112,71 @@ $ python manage.py createsuperuser
 $ python manage.py runserver
 ```
 
+### Django URLs
+
+```python
+# mysite/urls.py
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('blog.urls')),
+]
+```
+
+```python
+# blog/urls.py
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.post_list, name='post_list'),
+]
+```
+
+### Django views
+
+A view is a place where we put the "logic" of our application. It will request information from the `model` you created before and pass it to a `template`. 
+
+```py
+# blog/views.py
+def post_list(request):
+    return render(request, 'blog/post_list.html', {})
+```
+
+### Django templates
+
+A template is a file that we can re-use to present different information in a consistent format
+
+创建`blog/templates/blog/post_list.html`
+
+```html
+<!-- blog/templates/blog/post_list.html -->
+<html>
+    <head>
+        <title>Django Girls blog</title>
+    </head>
+    <body>
+        <div>
+            <h1><a href="/">Django Girls Blog</a></h1>
+        </div>
+
+        <div>
+            <p>published: 14.06.2014, 12:14</p>
+            <h2><a href="">My first post</a></h2>
+            <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+        </div>
+
+        <div>
+            <p>published: 14.06.2014, 12:14</p>
+            <h2><a href="">My second post</a></h2>
+            <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut f.</p>
+        </div>
+    </body>
+</html>
+```
+
 ## Deploy
 
 ### Git
@@ -134,4 +199,29 @@ $ git init
 # Initialized empty Git repository in ~/djangogirls/.git/
 $ git config --global user.name "Your Name"
 $ git config --global user.email you@example.com
+$ git status
+$ git add --all .
+$ git commit -m "My Django Girls app, first commit"
+```
+
+### Github
+
+注册Github，并创建新仓库
+
+```
+$ git remote add origin https://github.com/Tyno945/my-first-blog.git
+$ git push -u origin master
+```
+
+### PythonAnywhere
+
+- 注册[PythonAnywhere](www.pythonanywhere.com)
+- Creating a PythonAnywhere API token
+- 打开PythonAnywhere "Bash" console
+
+```bash
+# PythonAnywhere command-line
+$ pip3.7 install --user pythonanywhere
+$ pa_autoconfigure_django.py --python=3.7 https://github.com/Tyno945/my-first-blog.git
+$ python manage.py createsuperuser
 ```
