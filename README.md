@@ -303,6 +303,12 @@ Cascading Style Sheets (CSS) is a language used for describing the look and form
 
 详细代码见`blog/templates/blog/post_list.html`和`blog/static/css/blog.css`
 
+Servers like PythonAnywhere like to treat "static files" (like CSS files) differently from Python files, because they can optimise for them to be loaded faster. As a result, whenever we make changes to our CSS files, we need to run an extra command on the server to tell it to update them. The command is called `collectstatic`.
+
+```
+$ python manage.py collectstatic
+```
+
 ## Template extending
 
 创建`blog/templates/blog/base.html`
@@ -355,3 +361,26 @@ Cascading Style Sheets (CSS) is a language used for describing the look and form
 - Create a URL to a post's detail
 - Add a post's detail view
 - Create a template for the post details
+
+## Django Forms
+
+创建`blog/forms.py`
+
+```py
+# blog/forms.py
+from django import forms
+
+from .models import Post
+
+class PostForm(forms.ModelForm):
+
+    class Meta:
+        model = Post
+        fields = ('title', 'text',)
+```
+
+- Link to a page with the form
+- URL
+- post_new view
+- Template
+- Saving the form
